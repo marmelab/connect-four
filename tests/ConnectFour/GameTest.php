@@ -9,15 +9,15 @@ use ConnectFour\Side;
 
 class GameTest extends TestCase
 {
-    public function testNumberOfPiecesOnBoard()
+    public function testNumberOfDiscsOnBoard()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
-      $game->dropPiece(4, $turn);
+      $game->dropDisc(4, $turn);
 
-      $nbPieces = count($game->getBoard()->getPieces());
-      $this->assertEquals($nbPieces, 1);
+      $nbDiscs = $game->getBoard()->countDiscs();
+      $this->assertEquals($nbDiscs, 1);
     }
 
     /**
@@ -29,7 +29,7 @@ class GameTest extends TestCase
       $turn = $game->getCurrentTurn();
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
-      $game->dropPiece(4, $nextTurn);
+      $game->dropDisc(4, $nextTurn);
     }
 
     public function testTurnAlternatesOnDroppingDisc()
@@ -38,7 +38,7 @@ class GameTest extends TestCase
       $turn = $game->getCurrentTurn();
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
-      $game->dropPiece(4, $turn);
+      $game->dropDisc(4, $turn);
 
       $this->assertNotEquals($turn, $nextTurn);
     }
@@ -50,7 +50,7 @@ class GameTest extends TestCase
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
-      $game->dropPiece(Board::Columns + 1, $turn);
+      $game->dropDisc(Board::Columns + 1, $turn);
     }
 
     /**
@@ -60,7 +60,7 @@ class GameTest extends TestCase
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
-      $game->dropPiece(0, $turn);
+      $game->dropDisc(0, $turn);
     }
 
     public function testPlayerWinsWhenDropingFourAlignedDiscs()
@@ -69,13 +69,13 @@ class GameTest extends TestCase
       $turn = $game->getCurrentTurn();
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
-      $game->dropPiece(4, $turn);
-      $game->dropPiece(3, $nextTurn);
-      $game->dropPiece(5, $turn);
-      $game->dropPiece(2, $nextTurn);
-      $game->dropPiece(6, $turn);
-      $game->dropPiece(1, $nextTurn);
-      $game->dropPiece(7, $turn);
+      $game->dropDisc(4, $turn);
+      $game->dropDisc(3, $nextTurn);
+      $game->dropDisc(5, $turn);
+      $game->dropDisc(2, $nextTurn);
+      $game->dropDisc(6, $turn);
+      $game->dropDisc(1, $nextTurn);
+      $game->dropDisc(7, $turn);
 
       $this->assertEquals($game->getWinner(), $turn);
     }
@@ -86,13 +86,13 @@ class GameTest extends TestCase
       $turn = $game->getCurrentTurn();
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
-      $game->dropPiece(4, $turn);
-      $game->dropPiece(3, $nextTurn);
-      $game->dropPiece(5, $turn);
-      $game->dropPiece(2, $nextTurn);
-      $game->dropPiece(6, $turn);
-      $game->dropPiece(1, $nextTurn);
-      $game->dropPiece(7, $turn);
+      $game->dropDisc(4, $turn);
+      $game->dropDisc(3, $nextTurn);
+      $game->dropDisc(5, $turn);
+      $game->dropDisc(2, $nextTurn);
+      $game->dropDisc(6, $turn);
+      $game->dropDisc(1, $nextTurn);
+      $game->dropDisc(7, $turn);
 
       $this->assertTrue($game->isTerminated());
     }
@@ -106,15 +106,15 @@ class GameTest extends TestCase
       $turn = $game->getCurrentTurn();
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
-      $game->dropPiece(4, $turn);
-      $game->dropPiece(3, $nextTurn);
-      $game->dropPiece(5, $turn);
-      $game->dropPiece(2, $nextTurn);
-      $game->dropPiece(6, $turn);
-      $game->dropPiece(1, $nextTurn);
-      $game->dropPiece(7, $turn);
+      $game->dropDisc(4, $turn);
+      $game->dropDisc(3, $nextTurn);
+      $game->dropDisc(5, $turn);
+      $game->dropDisc(2, $nextTurn);
+      $game->dropDisc(6, $turn);
+      $game->dropDisc(1, $nextTurn);
+      $game->dropDisc(7, $turn);
       // here the first turn wins, game should be over
-      $game->dropPiece(1, $nextTurn);
+      $game->dropDisc(1, $nextTurn);
     }
 
     /**
@@ -127,7 +127,7 @@ class GameTest extends TestCase
       $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
 
       for($i = 1; $i <= Board::Rows + 1; $i++){
-        $game->dropPiece(4, ($i % 2 != 0) ? $nextTurn : $turn);
+        $game->dropDisc(4, ($i % 2 != 0) ? $nextTurn : $turn);
       }
     }
 }

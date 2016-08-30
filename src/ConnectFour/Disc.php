@@ -2,7 +2,7 @@
 
 namespace ConnectFour;
 
-class Piece
+class Disc
 {
   private int $x;
 

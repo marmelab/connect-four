@@ -7,10 +7,15 @@ class Board
   const Columns = 7;
   const Rows = 6;
 
-  private $pieces = [];
+  private $discs = [];
 
-  public function getPieces() : array
+  public function getDiscs() : array
   {
-    return $this->pieces;
+    return $this->discs;
+  }
+
+  public function countDiscs() : int
+  {
+    return count($this->discs);
   }
 }

@@ -24,7 +24,7 @@ class Game
       return $this->turn;
   }
 
-  public function dropPiece(int $col, $side)
+  public function dropDisc(int $col, $side)
   {
     if($this->getCurrentTurn() != $side)
       throw new NotYourTurnException();
