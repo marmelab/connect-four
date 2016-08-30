@@ -9,10 +9,7 @@ use ConnectFour\Side;
 
 class GameTest extends TestCase
 {
-    /**
-    * Tests that the number of pieces of the board is right
-    */
-    public function testPiecesOnBoard()
+    public function testNumberOfPiecesOnBoard()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -24,10 +21,9 @@ class GameTest extends TestCase
     }
 
     /**
-    * Tests that I cannot take the wrong turn
     * @expectedException ConnectFour\NotYourTurnException
     */
-    public function testCannotCheatTurns()
+    public function testCannotDropDiscWhenNotPlayerTurn()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -36,10 +32,7 @@ class GameTest extends TestCase
       $game->dropPiece(4, $nextTurn);
     }
 
-    /**
-    * Tests that turn alternates when I play
-    */
-    public function testTurnAlternates()
+    public function testTurnAlternatesOnDroppingDisc()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -51,10 +44,9 @@ class GameTest extends TestCase
     }
 
     /**
-    * Tests that I cannot drop a piece outside the board on the right
     * @expectedException ConnectFour\OutOfBoardException
     */
-    public function testBoardSizeMax(){
+    public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnRight(){
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
@@ -62,20 +54,16 @@ class GameTest extends TestCase
     }
 
     /**
-    * Tests that I cannot drop a piece outside the board on the left
     * @expectedException ConnectFour\OutOfBoardException
     */
-    public function testBoardSizeMin(){
+    public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnLeft(){
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
       $game->dropPiece(0, $turn);
     }
 
-    /**
-    * Tests that I win
-    */
-    public function testGameGetWinner()
+    public function testPlayerWinsWhenDropingFourAlignedDiscs()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -92,10 +80,7 @@ class GameTest extends TestCase
       $this->assertEquals($game->getWinner(), $turn);
     }
 
-    /**
-    * Tests that game is terminated
-    */
-    public function testGameIsTerminated()
+    public function testGameIsTerminatedWhenOnePlayerWins()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -113,10 +98,9 @@ class GameTest extends TestCase
     }
 
     /**
-    * Tests that I cannot take turn anymore when game is terminated
     * @expectedException ConnectFour\GameTerminatedException
     */
-    public function testCannotPlayWhenTerminated()
+    public function testPlayerCannotDropDiscsAnymoreWhenGameIsTerminated()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
@@ -134,10 +118,9 @@ class GameTest extends TestCase
     }
 
     /**
-    * Tests that I cannot drop a piece if column is full
     * @expectedException ConnectFour\OutOfBoardException
     */
-    public function testColumnIsFull()
+    public function testPlayerCannotDropDiscsAnymoreWhenColumnIsFull()
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
