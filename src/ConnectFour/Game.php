@@ -6,6 +6,10 @@ class Game
 {
     private $turn;
 
+    private $yellowPlayer;
+
+    private $redPlayer;
+
     private $board;
 
     private $winner;
@@ -13,19 +17,24 @@ class Game
     public function __construct()
     {
         $this->board = new Board();
-        $this->turn = rand(0, 1) == 0 ? Side::YELLOW : Side::RED;
     }
 
-    public function getCurrentTurn() : int
+    public function addPlayer(Player $player)
+    {
+        if (!$this->yellowPlayer) {
+            $this->yellowPlayer = $player;
+        } elseif (!$this->redPlayer) {
+            $this->redPlayer = $player;
+        // here both players are assigned, we can decide who starts
+        $this->turn = rand(0, 1) == 0 ? $this->yellowPlayer : $this->redPlayer;
+        } else {
+            throw new TooManyPlayersException();
+        }
+    }
+
+    public function getCurrentPlayer() : Player
     {
         return $this->turn;
-    }
-
-    public function dropDisc(int $col, $side)
-    {
-        if ($this->getCurrentTurn() != $side) {
-            throw new NotYourTurnException();
-        }
     }
 
     public function isTerminated() : bool
@@ -33,7 +42,7 @@ class Game
         return (bool) $this->winner;
     }
 
-    public function getWinner() : int
+    public function getWinner() : Player
     {
         return $this->winner;
     }

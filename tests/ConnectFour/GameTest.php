@@ -5,18 +5,33 @@ namespace Tests\ConnectFour;
 use PHPUnit\Framework\TestCase;
 use ConnectFour\Game;
 use ConnectFour\Board;
-use ConnectFour\Side;
+use ConnectFour\Player;
 
 class GameTest extends TestCase
 {
+  protected $game;
+  protected $player1;
+  protected $player2;
+
+  protected function setUp(){
+    $this->game = new Game();
+
+    $this->player1 = new Player("First");
+    $this->game->addPlayer($this->player1);
+
+    $this->player2 = new Player("Second");
+    $this->game->addPlayer($this->player2);
+  }
+
+
     public function testNumberOfDiscsOnBoard()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
+      $player = $this->game->getCurrentPlayer();
 
-      $game->dropDisc(4, $turn);
+      $player->dropDisc($this->game, 4);
 
-      $nbDiscs = $game->getBoard()->countDiscs();
+      $nbDiscs = $this->game->getBoard()->countDiscs();
+
       $this->assertEquals($nbDiscs, 1);
     }
 
@@ -25,76 +40,70 @@ class GameTest extends TestCase
     */
     public function testCannotDropDiscWhenNotPlayerTurn()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
+      $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-      $game->dropDisc(4, $nextTurn);
+      $player->dropDisc($this->game, 4);
     }
 
     public function testTurnAlternatesOnDroppingDisc()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
 
-      $game->dropDisc(4, $turn);
+      $player->dropDisc($this->game, 4);
+      $nextPlayer = $this->game->getCurrentPlayer();
 
-      $this->assertNotEquals($turn, $nextTurn);
+      $this->assertNotEquals($player, $nextPlayer);
     }
 
     /**
     * @expectedException ConnectFour\OutOfBoardException
     */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnRight(){
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
+      $player = $this->game->getCurrentPlayer();
 
-      $game->dropDisc(Board::COLUMNS + 1, $turn);
+      $player->dropDisc($this->game, Board::COLUMNS + 1);
     }
 
     /**
     * @expectedException ConnectFour\OutOfBoardException
     */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnLeft(){
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
+      $player = $this->game->getCurrentPlayer();
 
-      $game->dropDisc(0, $turn);
+      $player->dropDisc($this->game, 0);
     }
 
     public function testPlayerWinsWhenDropingFourAlignedDiscs()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
+      $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-      $game->dropDisc(4, $turn);
-      $game->dropDisc(3, $nextTurn);
-      $game->dropDisc(5, $turn);
-      $game->dropDisc(2, $nextTurn);
-      $game->dropDisc(6, $turn);
-      $game->dropDisc(1, $nextTurn);
-      $game->dropDisc(7, $turn);
+      $player->dropDisc($this->game, 4);
+      $nextPlayer->dropDisc($this->game, 3);
+      $player->dropDisc($this->game, 5);
+      $nextPlayer->dropDisc($this->game, 2);
+      $player->dropDisc($this->game, 6);
+      $nextPlayer->dropDisc($this->game, 1);
+      $player->dropDisc($this->game, 7);
 
-      $this->assertEquals($game->getWinner(), $turn);
+      $this->assertEquals($this->game->getWinner(), $player);
     }
 
     public function testGameIsTerminatedWhenOnePlayerWins()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
+      $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-      $game->dropDisc(4, $turn);
-      $game->dropDisc(3, $nextTurn);
-      $game->dropDisc(5, $turn);
-      $game->dropDisc(2, $nextTurn);
-      $game->dropDisc(6, $turn);
-      $game->dropDisc(1, $nextTurn);
-      $game->dropDisc(7, $turn);
+      $player->dropDisc($this->game, 4);
+      $nextPlayer->dropDisc($this->game, 3);
+      $player->dropDisc($this->game, 5);
+      $nextPlayer->dropDisc($this->game, 2);
+      $player->dropDisc($this->game, 6);
+      $nextPlayer->dropDisc($this->game, 1);
+      $player->dropDisc($this->game, 7);
 
-      $this->assertTrue($game->isTerminated());
+      $this->assertTrue($this->game->isTerminated());
     }
 
     /**
@@ -102,19 +111,18 @@ class GameTest extends TestCase
     */
     public function testPlayerCannotDropDiscsAnymoreWhenGameIsTerminated()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
+      $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-      $game->dropDisc(4, $turn);
-      $game->dropDisc(3, $nextTurn);
-      $game->dropDisc(5, $turn);
-      $game->dropDisc(2, $nextTurn);
-      $game->dropDisc(6, $turn);
-      $game->dropDisc(1, $nextTurn);
-      $game->dropDisc(7, $turn);
+      $player->dropDisc($this->game, 4);
+      $nextPlayer->dropDisc($this->game, 3);
+      $player->dropDisc($this->game, 5);
+      $nextPlayer->dropDisc($this->game, 2);
+      $player->dropDisc($this->game, 6);
+      $nextPlayer->dropDisc($this->game, 1);
+      $player->dropDisc($this->game, 7);
       // here the first turn wins, game should be over
-      $game->dropDisc(1, $nextTurn);
+      $nextPlayer->dropDisc($this->game, 1);
     }
 
     /**
@@ -122,12 +130,16 @@ class GameTest extends TestCase
     */
     public function testPlayerCannotDropDiscsAnymoreWhenColumnIsFull()
     {
-      $game = new Game();
-      $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
+      $player = $this->game->getCurrentPlayer();
+      $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
       for($i = 1; $i <= Board::ROWS + 1; $i++){
-        $game->dropDisc(4, ($i % 2 != 0) ? $nextTurn : $turn);
+        if($i % 2 != 0){
+          $nextPlayer->dropDisc($this->game, 4);
+        }
+        else {
+          $player->dropDisc($this->game, 4);
+        }
       }
     }
 }
