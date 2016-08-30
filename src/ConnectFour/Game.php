@@ -15,7 +15,7 @@ class Game
   public function __construct()
   {
     $this->board = new Board();
-    $this->turn = rand(0,1) == 0 ? Side::Yellow : Side::Red;
+    $this->turn = rand(0,1) == 0 ? Side::YELLOW : Side::RED;
   }
 
 

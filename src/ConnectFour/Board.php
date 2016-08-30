@@ -4,8 +4,8 @@ namespace ConnectFour;
 
 class Board
 {
-  const Columns = 7;
-  const Rows = 6;
+  const COLUMNS = 7;
+  const ROWS = 6;
 
   private $discs = [];
 

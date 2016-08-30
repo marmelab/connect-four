@@ -4,6 +4,6 @@ namespace ConnectFour;
 
 abstract class Side
 {
-    const Yellow = 0;
-    const Red = 1;
+    const YELLOW = 0;
+    const RED = 1;
 }

@@ -27,7 +27,7 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
       $game->dropDisc(4, $nextTurn);
     }
@@ -36,7 +36,7 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
       $game->dropDisc(4, $turn);
 
@@ -50,7 +50,7 @@ class GameTest extends TestCase
       $game = new Game();
       $turn = $game->getCurrentTurn();
 
-      $game->dropDisc(Board::Columns + 1, $turn);
+      $game->dropDisc(Board::COLUMNS + 1, $turn);
     }
 
     /**
@@ -67,7 +67,7 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
       $game->dropDisc(4, $turn);
       $game->dropDisc(3, $nextTurn);
@@ -84,7 +84,7 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
       $game->dropDisc(4, $turn);
       $game->dropDisc(3, $nextTurn);
@@ -104,7 +104,7 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
       $game->dropDisc(4, $turn);
       $game->dropDisc(3, $nextTurn);
@@ -124,9 +124,9 @@ class GameTest extends TestCase
     {
       $game = new Game();
       $turn = $game->getCurrentTurn();
-      $nextTurn = ($turn == Side::Red) ? Side::Yellow : Side::Red;
+      $nextTurn = ($turn == Side::RED) ? Side::YELLOW : Side::RED;
 
-      for($i = 1; $i <= Board::Rows + 1; $i++){
+      for($i = 1; $i <= Board::ROWS + 1; $i++){
         $game->dropDisc(4, ($i % 2 != 0) ? $nextTurn : $turn);
       }
     }
