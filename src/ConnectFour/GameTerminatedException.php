@@ -2,6 +2,6 @@
 
 namespace ConnectFour;
 
-class GameTerminatedException extends \Exception
+class GameFinishedException extends \Exception
 {
 }
