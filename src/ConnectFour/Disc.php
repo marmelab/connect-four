@@ -8,11 +8,11 @@ class Disc
 
   private int $y;
 
-  private $side;
+  private $player;
 
-  public function __construct(int $x, int $y, Side $side){
+  public function __construct(int $x, int $y, Player $player){
     $this->x = $x;
     $this->y = $y;
-    $this->side = $side;
+    $this->player = $player;
   }
 }
