@@ -37,7 +37,7 @@ class Game
         return $this->turn;
     }
 
-    public function isTerminated() : bool
+    public function isFinished() : bool
     {
         return (bool) $this->winner;
     }
