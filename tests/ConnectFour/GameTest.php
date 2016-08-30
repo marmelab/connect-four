@@ -11,7 +11,6 @@ class GameTest extends TestCase
 {
     /**
     * Tests that the number of pieces of the board is right
-    * @covers Game::dropPiece
     */
     public function testPiecesOnBoard()
     {
@@ -26,7 +25,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I cannot take the wrong turn
-    * @covers Game::dropPiece
     * @expectedException ConnectFour\NotYourTurnException
     */
     public function testCannotCheatTurns()
@@ -40,7 +38,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that turn alternates when I play
-    * @covers Game::dropPiece
     */
     public function testTurnAlternates()
     {
@@ -55,7 +52,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I cannot drop a piece outside the board on the right
-    * @covers Game::dropPiece
     * @expectedException ConnectFour\OutOfBoardException
     */
     public function testBoardSizeMax(){
@@ -67,7 +63,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I cannot drop a piece outside the board on the left
-    * @covers Game::dropPiece
     * @expectedException ConnectFour\OutOfBoardException
     */
     public function testBoardSizeMin(){
@@ -79,7 +74,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I win
-    * @covers Game::getWinner
     */
     public function testGameGetWinner()
     {
@@ -100,7 +94,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that game is terminated
-    * @covers Game::isTerminated
     */
     public function testGameIsTerminated()
     {
@@ -121,7 +114,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I cannot take turn anymore when game is terminated
-    * @covers Game::dropPiece
     * @expectedException ConnectFour\GameTerminatedException
     */
     public function testCannotPlayWhenTerminated()
@@ -143,7 +135,6 @@ class GameTest extends TestCase
 
     /**
     * Tests that I cannot drop a piece if column is full
-    * @covers Game::dropPiece
     * @expectedException ConnectFour\OutOfBoardException
     */
     public function testColumnIsFull()
