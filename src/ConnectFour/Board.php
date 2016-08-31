@@ -52,6 +52,10 @@ class Board
 
     public function addDisc($column, $player)
     {
+        if($col < 0 || $col >= self::COLUMNS)
+        {
+            throw new OutOfBoardException();
+        }
         $disc = new Disc($player);
         $this->cells[$column][$this->getHigherFreeRow($column)] = $disc;
     }

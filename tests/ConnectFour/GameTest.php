@@ -26,8 +26,6 @@ class GameTest extends TestCase
 
     public function testNumberOfDiscsOnBoard()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
 
         $player->dropDisc($this->game, 4);
@@ -42,18 +40,14 @@ class GameTest extends TestCase
      */
     public function testCannotDropDiscWhenNotPlayerTurn()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-        $player->dropDisc($this->game, 4);
+        $nextPlayer->dropDisc($this->game, 4);
     }
 
     public function testTurnAlternatesOnDroppingDisc()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
 
         $player->dropDisc($this->game, 4);
@@ -67,8 +61,6 @@ class GameTest extends TestCase
      */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnRight()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
 
         $player->dropDisc($this->game, Board::COLUMNS + 1);
@@ -79,11 +71,9 @@ class GameTest extends TestCase
      */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnLeft()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
 
-        $player->dropDisc($this->game, 0);
+        $player->dropDisc($this->game, -1);
     }
 
     public function testPlayerWinsWhenDropingFourAlignedDiscs()
@@ -150,8 +140,6 @@ class GameTest extends TestCase
      */
     public function testPlayerCannotDropDiscsAnymoreWhenColumnIsFull()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
