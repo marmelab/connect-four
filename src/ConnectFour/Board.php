@@ -34,9 +34,21 @@ class Board
         return $this->cells;
     }
 
-    public function getDisc(int $column, int $row) // : Disc - cannot return null, waiting for php 7.1
+    public function getDisc(int $column, int $row, Player $player = null) // : Disc - cannot return null, waiting for php 7.1
     {
-        return $this->cells[$column][$row];
+        if (
+            $column < 0 || $column >= self::COLUMNS ||
+            $row < 0 || $row >= self::ROWS
+        ) {
+            throw new OutOfBoardException();
+        }
+        $disc = $this->cells[$column][$row];
+
+        if ((bool) $player && $disc && $disc->getPlayer() != $player) {
+            return;
+        }
+
+        return $disc;
     }
 
     public function countDiscs() : int
@@ -50,14 +62,21 @@ class Board
         return $count;
     }
 
-    public function addDisc($column, $player)
+    public function addDisc($column, $player) : int
     {
-        if($col < 0 || $col >= self::COLUMNS)
-        {
+        if ($column < 0 || $column >= self::COLUMNS) {
             throw new OutOfBoardException();
         }
         $disc = new Disc($player);
-        $this->cells[$column][$this->getHigherFreeRow($column)] = $disc;
+        $higherFreeRow = $this->getHigherFreeRow($column);
+        $this->discs[$column][$higherFreeRow] = $disc;
+
+        return $higherFreeRow;
+    }
+
+    public function isFull() : bool
+    {
+        return $this->countDiscs() == self::COLUMNS * self::ROWS;
     }
 
     private function getHigherFreeRow($column) : int

@@ -48,6 +48,8 @@ class Game
 
     private $winner;
 
+    private $finished;
+
     /**
      * @ORM\OneToMany(targetEntity="Move", mappedBy="game", cascade={"all"})
      */
@@ -104,10 +106,9 @@ class Game
         return self::WAITING;
     }
 
-    public function isFinished() : bool
+    public function isFinished() // : bool
     {
-        //TODO : check draw
-        return (bool) $this->winner;
+        return $this->finished;
     }
 
     public function getWinner() // : Player - Can't be null, waiting for php 7.1
@@ -122,6 +123,9 @@ class Game
 
     public function addDisc(int $column, Player $player, bool $addMove = true)
     {
+        if ($this->isFinished()) {
+            throw new GameFinishedException();
+        }
         if ($this->currentPlayer != $player) {
             throw new NotYourTurnException();
         }
@@ -129,7 +133,20 @@ class Game
             $move = new Move($this, $column, $player, new \DateTime());
             $this->getMoves()->add($move);
         }
-        $this->getBoard()->addDisc($column, $player);
+        $rowAdded = $this->getBoard()->addDisc($column, $player);
+
+        if ($this->isDiscWinner($column, $rowAdded)) {
+            $this->winner = $player;
+            $this->finished = true;
+
+            return;
+        }
+
+        if ($this->getBoard()->isFull()) {
+            $this->finished = true;
+
+            return;
+        }
 
         $this->switchPlayer();
     }
@@ -137,6 +154,86 @@ class Game
     private function switchPlayer()
     {
         $this->currentPlayer = ($this->firstPlayer == $this->currentPlayer) ? $this->secondPlayer : $this->firstPlayer;
+    }
+
+    // TODO: use better algorithm
+    private function isDiscWinner(int $column, int $row)
+    {
+        $player = $this->getBoard()->getDisc($column, $row)->getPlayer();
+        $horizontalCount = 1 + $this->countConsecutiveDiscsAsideOf($column, $row, $player, -1, 0)
+        + $this->countConsecutiveDiscsAsideOf($column, $row, $player, +1, 0);
+        if ($horizontalCount >= 4) {
+            return true;
+        }
+
+        $verticalCount = 1 + $this->countConsecutiveDiscsAsideOf($column, $row, $player, 0, -1)
+        + $this->countConsecutiveDiscsAsideOf($column, $row, $player, 0, +1);
+        if ($verticalCount >= 4) {
+            return true;
+        }
+
+        $topLeftBottomRightCount = 1 + $this->countConsecutiveDiscsAsideOf($column, $row, $player, -1, -1)
+        + $this->countConsecutiveDiscsAsideOf($column, $row, $player, +1, +1);
+        if ($topLeftBottomRightCount >= 4) {
+            return true;
+        }
+
+        $bottomLeftTopRightCount = 1 + $this->countConsecutiveDiscsAsideOf($column, $row, $player, -1, +1)
+        + $this->countConsecutiveDiscsAsideOf($column, $row, $player, +1, -1);
+        if ($bottomLeftTopRightCount >= 4) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *   Scans a side of a position (exclusive) by horizontal and vertical steps.
+     */
+    private function countConsecutiveDiscsAsideOf(int $column, int $row, Player $player, int $columnStep = 1, int $rowStep = 1)
+    {
+        $cnt = 0;
+        $maxPositions = 3;
+        $x = $column + $columnStep;
+        $y = $row + $rowStep;
+        while (
+            $this->isHorizontallyInBounds($x, $column, $columnStep, $maxPositions) &&
+            $this->isVerticallyInBounds($y, $row, $rowStep, $maxPositions)
+        ) {
+            try {
+                $disc = $this->getBoard()->getDisc($x, $y, $player);
+                if (!$disc) {
+                    // if no disk found, stop looking
+                    break;
+                }
+                ++$cnt;
+                $x += $colStep;
+                $y += $rowStep;
+            } catch (OutOfBoardException $e) {
+                // if we're being out of the board, stop looking for discs
+                break;
+            }
+        }
+
+        return $cnt;
+    }
+
+    private function isHorizontallyInBounds($x, $column, $columnStep, $maxPositions)
+    {
+        if ($columnStep < 0) {
+            return $x >= $column + ($maxPositions * $columnStep);
+        } else {
+            return $x <= $column + ($maxPositions * $columnStep);
+        }
+    }
+
+    private function isVerticallyInBounds($y, $row, $rowStep, $maxPositions)
+    {
+        if ($rowStep < 0) {
+            return $y >= $row + ($maxPositions * $rowStep);
+        } else {
+            return $y <= $row + ($maxPositions * $rowStep);
+        }
     }
 
     public function replayMoves()

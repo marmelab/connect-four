@@ -76,38 +76,34 @@ class GameTest extends TestCase
         $player->dropDisc($this->game, -1);
     }
 
-    public function testPlayerWinsWhenDropingFourAlignedDiscs()
+    public function testPlayerWinsWhenDroppingFourAlignedDiscs()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
         $player->dropDisc($this->game, 4);
-        $nextPlayer->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 0);
         $player->dropDisc($this->game, 5);
         $nextPlayer->dropDisc($this->game, 2);
         $player->dropDisc($this->game, 6);
         $nextPlayer->dropDisc($this->game, 1);
-        $player->dropDisc($this->game, 7);
+        $player->dropDisc($this->game, 3);
 
         $this->assertEquals($this->game->getWinner(), $player);
     }
 
     public function testGameIsFinishedWhenOnePlayerWins()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
         $player->dropDisc($this->game, 4);
-        $nextPlayer->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 0);
         $player->dropDisc($this->game, 5);
         $nextPlayer->dropDisc($this->game, 2);
         $player->dropDisc($this->game, 6);
         $nextPlayer->dropDisc($this->game, 1);
-        $player->dropDisc($this->game, 7);
+        $player->dropDisc($this->game, 3);
 
         $this->assertEquals($this->game->getStatus(), Game::FINISHED);
         $this->assertTrue($this->game->isFinished());
@@ -118,21 +114,77 @@ class GameTest extends TestCase
      */
     public function testPlayerCannotDropDiscsAnymoreWhenGameIsFinished()
     {
-        $this->markTestIncomplete();
-
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
         $player->dropDisc($this->game, 4);
-        $nextPlayer->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 0);
         $player->dropDisc($this->game, 5);
         $nextPlayer->dropDisc($this->game, 2);
         $player->dropDisc($this->game, 6);
         $nextPlayer->dropDisc($this->game, 1);
-        $player->dropDisc($this->game, 7);
+        $player->dropDisc($this->game, 3);
         // here the first turn wins, game should be over
         $this->assertEquals($this->game->getStatus(), Game::FINISHED);
         $nextPlayer->dropDisc($this->game, 1);
+    }
+
+    public function testGameIsFinishedWhenItsDraw()
+    {
+        $player = $this->game->getCurrentPlayer();
+        $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
+
+        $player->dropDisc($this->game, 0);
+        $nextPlayer->dropDisc($this->game, 1);
+        $player->dropDisc($this->game, 0);
+        $nextPlayer->dropDisc($this->game, 1);
+        $player->dropDisc($this->game, 0);
+        $nextPlayer->dropDisc($this->game, 1);
+
+        $player->dropDisc($this->game, 2);
+        $nextPlayer->dropDisc($this->game, 3);
+        $player->dropDisc($this->game, 2);
+        $nextPlayer->dropDisc($this->game, 3);
+        $player->dropDisc($this->game, 2);
+        $nextPlayer->dropDisc($this->game, 3);
+
+        $player->dropDisc($this->game, 4);
+        $nextPlayer->dropDisc($this->game, 5);
+        $player->dropDisc($this->game, 4);
+        $nextPlayer->dropDisc($this->game, 5);
+        $player->dropDisc($this->game, 4);
+        $nextPlayer->dropDisc($this->game, 5);
+
+        $player->dropDisc($this->game, 6);
+        $nextPlayer->dropDisc($this->game, 0);
+        $player->dropDisc($this->game, 6);
+        $nextPlayer->dropDisc($this->game, 0);
+        $player->dropDisc($this->game, 6);
+        $nextPlayer->dropDisc($this->game, 0);
+
+        $player->dropDisc($this->game, 1);
+        $nextPlayer->dropDisc($this->game, 2);
+        $player->dropDisc($this->game, 1);
+        $nextPlayer->dropDisc($this->game, 2);
+        $player->dropDisc($this->game, 1);
+        $nextPlayer->dropDisc($this->game, 2);
+
+        $player->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 4);
+        $player->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 4);
+        $player->dropDisc($this->game, 3);
+        $nextPlayer->dropDisc($this->game, 4);
+
+        $player->dropDisc($this->game, 5);
+        $nextPlayer->dropDisc($this->game, 6);
+        $player->dropDisc($this->game, 5);
+        $nextPlayer->dropDisc($this->game, 6);
+        $player->dropDisc($this->game, 5);
+        $nextPlayer->dropDisc($this->game, 6);
+
+        $this->assertNull($this->game->getWinner());
+        $this->assertTrue($this->game->isFinished());
     }
 
     /**
@@ -143,7 +195,7 @@ class GameTest extends TestCase
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
 
-        for ($i = 1; $i <= Board::ROWS + 1; ++$i) {
+        for ($i = 0; $i < Board::ROWS + 1; ++$i) {
             if ($i % 2 != 0) {
                 $nextPlayer->dropDisc($this->game, 4);
             } else {
