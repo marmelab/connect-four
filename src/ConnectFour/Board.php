@@ -67,10 +67,16 @@ class Board
         if ($column < 0 || $column >= self::COLUMNS) {
             throw new OutOfBoardException();
         }
+<<<<<<< 686c33f10bf685bf1e6768d01d82af2c13706801
         $disc = new Disc($player);
         $higherFreeRow = $this->getHigherFreeRow($column);
         $this->discs[$column][$higherFreeRow] = $disc;
 
+=======
+        $higherFreeRow = $this->getHigherFreeRow($col);
+        $disc = new Disc($player);
+        $this->discs[$col][$higherFreeRow] = $disc;
+>>>>>>> Fixes OutOfBoard exception throwing
         return $higherFreeRow;
     }
 
