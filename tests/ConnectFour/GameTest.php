@@ -114,13 +114,12 @@ class GameTest extends TestCase
         $player->dropDisc($this->game, 7);
 
         $this->assertEquals($this->game->getWinner(), $player);
-
     }
 
-    public function testGameIsTerminatedWhenOnePlayerWins()
+    public function testGameIsFinishedWhenOnePlayerWins()
     {
         $this->markTestIncomplete(
-            "This test has not been implemented yet."
+            'This test has not been implemented yet.'
         );
 
         $player = $this->game->getCurrentPlayer();
@@ -134,13 +133,13 @@ class GameTest extends TestCase
         $nextPlayer->dropDisc($this->game, 1);
         $player->dropDisc($this->game, 7);
 
-        $this->assertTrue($this->game->isTerminated());
+        $this->assertTrue($this->game->isFinished());
     }
 
     /**
-     * @expectedException ConnectFour\GameTerminatedException
+     * @expectedException ConnectFour\GameFinishedException
      */
-    public function testPlayerCannotDropDiscsAnymoreWhenGameIsTerminated()
+    public function testPlayerCannotDropDiscsAnymoreWhenGameIsFinished()
     {
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
