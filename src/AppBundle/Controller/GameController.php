@@ -34,6 +34,11 @@ class GameController extends Controller
 
         return $this->render("game/$view.html.twig", array(
           'game' => $game,
+<<<<<<< 76a6572cba2d4e06410b40999caa21255800ecdb
+=======
+          'columnBounds' => Board::COLUMNS - 1,
+          'rowBounds' => Board::ROWS - 1,
+>>>>>>> Fixes board boundaries
       ));
     }
 
