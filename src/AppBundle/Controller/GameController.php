@@ -36,4 +36,26 @@ class GameController extends Controller
           'game' => $game,
       ));
     }
+
+    /**
+     * Views a game at its last step.
+     *
+     * @Route("/game/{gameId}/drop/{col}", name="dropDisc")
+     */
+    public function dropDiscAction($gameId, $col)
+    {
+        $gameManager = $this->get('app.game.manager');
+        $game = $gameManager->getGame($gameId);
+
+        $player = $game->getCurrentPlayer();
+        // TODO : add session check for player nickname
+
+        $player->dropDisc($game, $col);
+
+        $gameManager->saveGame($game);
+
+        return $this->redirectToRoute('viewGame', array(
+            'gameId' => $gameId
+        ));
+    }
 }
