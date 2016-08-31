@@ -5,6 +5,10 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ConnectFour\Game;
+use ConnectFour\Board;
+use ConnectFour\GameFinishedException;
+use ConnectFour\NotYourTurnException;
+use ConnectFour\OutOfBoardException;
 
 class GameController extends Controller
 {
@@ -33,12 +37,7 @@ class GameController extends Controller
         }
 
         return $this->render("game/$view.html.twig", array(
-          'game' => $game,
-<<<<<<< 76a6572cba2d4e06410b40999caa21255800ecdb
-=======
-          'columnBounds' => Board::COLUMNS - 1,
-          'rowBounds' => Board::ROWS - 1,
->>>>>>> Fixes board boundaries
+          'game' => $game
       ));
     }
 
@@ -55,7 +54,29 @@ class GameController extends Controller
         $player = $game->getCurrentPlayer();
         // TODO : add session check for player nickname
 
-        $player->dropDisc($game, $col);
+        try{
+            $player->dropDisc($game, $col);
+        }catch(GameFinishedException $gfe){
+            $this->addFlash(
+                'notice',
+                'Game is finished, you cannot play anymore.'
+            );
+        }catch(NotYourTurnException $nyte){
+            $this->addFlash(
+                'notice',
+                'It\'s your opponent\'s turn.'
+            );
+        }catch(OutOfBoardException $oobe){
+            $this->addFlash(
+                'notice',
+                'Cannot play outside of game board.'
+            );
+        }catch(\Exception $e){
+            $this->addFlash(
+                'notice',
+                "Something happened : \n $e"
+            );
+        }
 
         $gameManager->saveGame($game);
 

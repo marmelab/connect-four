@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Connect Four Game</h1>
+
+{% for flash_message in app.session.flashBag.get('notice') %}
+    <div class="flash-notice">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+
+<div id="game-container">
+    <div id="status">
+      <span>{% block status %}{% endblock %}</span>
+    </div>
+    {% block game %}{% endblock %}
+</div>
+
+
+<div id="players-container">
+    <div style="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "font-weight:bold;" : "" }}">
+        <div class="badge red"></div> {{ game.getRedPlayer().getNickname() }}
+    </div>
+    <div style="{{ game.getCurrentPlayer() == game.getYellowPlayer() ? "font-weight:bold;" : "" }}">
+        <div class="badge yellow"></div> {{ game.getYellowPlayer().getNickname() }}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    #game-container{
+        float:left;
+        margin:0 20px;
+    }
+
+    #status{
+        margin: 0 0 10px 0;
+    }
+
+    .flash-notice{
+        background-color:orange;
+    }
+
+    .badge{
+        display:inline-block;
+        width:12px;
+        height:12px;
+    }
+
+    .badge.yellow{
+        background-color:yellow;
+    }
+
+    .badge.red{
+        background-color:red;
+    }
+</style>
+{% endblock %}

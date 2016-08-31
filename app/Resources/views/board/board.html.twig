@@ -1,0 +1,51 @@
+<style>
+    #board{
+        background-color: blue;
+        padding:10px;
+    }
+
+    #board.disabled{
+        opacity: 0.2;
+    }
+
+    .disc{
+        height:40px;
+        width:40px;
+        display:inline-block;
+        border: 1px solid;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background-color:white;
+        box-shadow: inset 4px 1px 6px 0px #656565;
+    }
+
+    .disc.yellow{
+        background-color: yellow;
+    }
+
+    .disc.red{
+        background-color: red;
+    }
+
+    .disc.empty{
+        border-color: grey;
+        box-shadow: none;
+    }
+</style>
+
+<div id="board" class="{{ disabled|default(false) ? 'disabled' : '' }}">
+    {% for row in rowBounds..0 %}
+        <div class="row">
+            {% for col in 0..columnBounds %}
+                {% set disc = game.getBoard().getDisc(col, row) %}
+                {% if disc %}
+                    {% set color = game.getYellowPlayer() == disc.getPlayer() ? "yellow" : "red" %}
+                    <div class="disc {{ color }}">
+                    </div>
+                {% else %}
+                    <div class="disc empty"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
