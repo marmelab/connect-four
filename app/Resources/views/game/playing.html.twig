@@ -22,10 +22,9 @@
         </div>
     </div>
     <div id="disc-container">
-        {% for row in rowBound..0 %}
-            <div class="row">
-                {% for column in 0..columnBound %}
-                    {% set disc = game.getBoard().getDisc(column, row) %}
+        {% for column in game.getBoard().getDiscs() %}
+            <div class="column">
+                {% for disc in column | reverse %}
                     {% if disc %}
                         {% set color = game.getYellowPlayer() == disc.getPlayer()
                             ? "yellow"
@@ -60,10 +59,13 @@
             background-color: red;
         }
 
+        .column {
+            float: left;
+        }
+
         .disc {
             height: 40px;
             width: 40px;
-            display: inline-block;
             border: 1px solid;
             box-sizing: border-box;
         }
