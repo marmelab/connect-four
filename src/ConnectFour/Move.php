@@ -47,76 +47,40 @@ class Move
         $this->date = $date;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
 
-    /**
-     * Set column.
-     *
-     * @param int $column
-     *
-     * @return Move
-     */
-    public function setColumn($column)
+    public function setColumn(int $column)
     {
         $this->column = $column;
 
         return $this;
     }
 
-    /**
-     * Get column.
-     *
-     * @return int
-     */
     public function getColumn()
     {
         return $this->column;
     }
 
-    /**
-     * Set date.
-     *
-     * @param \DateTime $date
-     *
-     * @return Move
-     */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * Get date.
-     *
-     * @return \DateTime
-     */
     public function getDate()
     {
         return $this->date;
     }
 
-    /**
-     * Set game.
-     *
-     * @param Game $game
-     *
-     * @return Move
-     */
     public function setGame(Game $game = null)
     {
         $this->game = $game;
@@ -124,23 +88,11 @@ class Move
         return $this;
     }
 
-    /**
-     * Get game.
-     *
-     * @return \AppBundle\Entity\Game
-     */
     public function getGame()
     {
         return $this->game;
     }
 
-    /**
-     * Set player.
-     *
-     * @param \AppBundle\Entity\Player $player
-     *
-     * @return Move
-     */
     public function setPlayer(Player $player = null)
     {
         $this->player = $player;
@@ -148,11 +100,6 @@ class Move
         return $this;
     }
 
-    /**
-     * Get player.
-     *
-     * @return \AppBundle\Entity\Player
-     */
     public function getPlayer()
     {
         return $this->player;

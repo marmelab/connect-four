@@ -10,8 +10,6 @@ use ConnectFour\Game;
 class GameController extends Controller
 {
     /**
-     * Views a game at its last step.
-     *
      * @Route("/game/{gameId}", name="viewGame")
      */
     public function viewAction($gameId)
