@@ -158,7 +158,7 @@ class Game
         $this->currentPlayer = ($this->firstPlayer == $this->currentPlayer) ? $this->secondPlayer : $this->firstPlayer;
     }
 
-    // TODO: use better algorithm
+    // TODO: use cleaner algorithm : full iteration : horizontal, vertical, diagonal x2
     private function isDiscWinner(int $column, int $row)
     {
         $player = $this->getBoard()->getDisc($column, $row)->getPlayer();
