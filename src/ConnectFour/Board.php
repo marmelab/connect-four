@@ -7,37 +7,37 @@ class Board
     const COLUMNS = 7;
     const ROWS = 6;
 
-    private $discs;
+    private $cells;
 
     public function __construct()
     {
-        $this->initializeDiscsArray();
+        $this->initializeCells();
     }
 
-    private function initializeDiscsArray()
+    private function initializeCells()
     {
         for ($i = 0; $i <= self::COLUMNS; ++$i) {
-            $this->discs[$i] = array();
+            $this->cells[$i] = array();
             for ($j = 0; $j <= self::ROWS; ++$j) {
-                $this->discs[$i][$j] = null;
+                $this->cells[$i][$j] = null;
             }
         }
     }
 
-    public function getDiscs() : array
+    public function getCells() : array
     {
-        return $this->discs;
+        return $this->cells;
     }
 
     public function getDisc(int $column, int $row) // : Disc - cannot return null, waiting for php 7.1
     {
-        return $this->discs[$column][$row];
+        return $this->cells[$column][$row];
     }
 
     public function countDiscs() : int
     {
         $count = 0;
-        foreach ($this->discs as $row) {
+        foreach ($this->cells as $row) {
             // array_filter purges null values before counting
             $count += count(array_filter($row));
         }
@@ -48,7 +48,7 @@ class Board
     public function addDisc($column, $player)
     {
         $disc = new Disc($player);
-        $this->discs[$column][$this->getHigherFreeRow($column)] = $disc;
+        $this->cells[$column][$this->getHigherFreeRow($column)] = $disc;
     }
 
     private function getHigherFreeRow($column) : int
@@ -56,7 +56,7 @@ class Board
         $row = 0;
 
         while ($row < self::ROWS) {
-            if (!$this->discs[$column][$row]) {
+            if (!$this->cells[$column][$row]) {
                 return $row;
             }
             ++$row;

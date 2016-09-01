@@ -22,16 +22,16 @@
         </div>
     </div>
     <div id="disc-container">
-        {% for column in game.getBoard().getDiscs() %}
+        {% for column in game.getBoard().getCells() %}
             <div class="column">
                 {% for disc in column | reverse %}
                     {% if disc %}
                         {% set color = game.getYellowPlayer() == disc.getPlayer()
                             ? "yellow"
                             : "red" %}
-                        <div class="disc {{ color }}"></div>
+                        <div class="cell disc {{ color }}"></div>
                     {% else %}
-                        <div class="disc empty"></div>
+                        <div class="cell empty"></div>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -63,6 +63,17 @@
             float: left;
         }
 
+        .cell {
+            height: 40px;
+            width: 40px;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
+
+        .cell.empty {
+            border-color: grey;
+        }
+
         .disc {
             height: 40px;
             width: 40px;
@@ -76,10 +87,6 @@
 
         .disc.red {
             background-color: red;
-        }
-
-        .disc.empty {
-            border-color: grey;
         }
 
     </style>
