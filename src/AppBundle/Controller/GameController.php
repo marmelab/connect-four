@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use ConnectFour\Board;
 use ConnectFour\Game;
 
 class GameController extends Controller
@@ -14,14 +13,16 @@ class GameController extends Controller
      */
     public function viewAction($gameId)
     {
-        $gameManager = $this->get('app.game.manager');
-        $game = $gameManager->getGame($gameId);
+        $game = $this->getDoctrine()
+            ->getRepository("ConnectFour\Game")
+            ->findOneById($gameId);
+
+        $game->replayMoves();
 
         // TODO : add session check for player nickname
 
         $view;
-        switch($game->getStatus())
-        {
+        switch ($game->getStatus()) {
             case Game::FINISHED:
                 $view = 'finished';
                 break;
@@ -36,7 +37,7 @@ class GameController extends Controller
         }
 
         return $this->render("game/$view.html.twig", array(
-          'game' => $game
+          'game' => $game,
       ));
     }
 }
