@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <h1>Connect Four Game</h1>
+            <div>
+                <span>Playing</span>
+            </div>
+
+            <div>
+                {% set currentPlayer = game.getCurrentPlayer() %}
+                {% set firstPlayer = game.getFirstPlayer() %}
+                {% set secondPlayer = game.getSecondPlayer() %}
+                <div class="{{ currentPlayer == firstPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(firstPlayer) }}"></div>
+                    {{ firstPlayer.getNickname() }}
+                </div>
+                <div class="{{ currentPlayer == secondPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(secondPlayer) }}"></div>
+                    {{ secondPlayer.getNickname() }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="disc-container">
+        {% for column in game.getBoard().getCells() %}
+            <div class="column">
+                {% for disc in column | reverse %}
+                    {% if disc %}
+                        <div class="cell disc {{ game.getPlayerColor(disc.getPlayer()) }}"></div>
+                    {% else %}
+                        <div class="cell empty"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .badge {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+        }
+
+        .now-playing {
+            font-weight: bold;
+        }
+
+        .badge.yellow {
+            background-color: yellow;
+        }
+
+        .badge.red {
+            background-color: red;
+        }
+
+        .column {
+            float: left;
+        }
+
+        .cell {
+            height: 40px;
+            width: 40px;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
+
+        .cell.empty {
+            border-color: grey;
+        }
+
+        .disc {
+            height: 40px;
+            width: 40px;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
+
+        .disc.yellow {
+            background-color: yellow;
+        }
+
+        .disc.red {
+            background-color: red;
+        }
+
+    </style>
+{% endblock %}

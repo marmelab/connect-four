@@ -4,15 +4,15 @@ namespace ConnectFour;
 
 class Disc
 {
-  private int $x;
+    private $player;
 
-  private int $y;
+    public function __construct(Player $player)
+    {
+        $this->player = $player;
+    }
 
-  private $player;
-
-  public function __construct(int $x, int $y, Player $player){
-    $this->x = $x;
-    $this->y = $y;
-    $this->player = $player;
-  }
+    public function getPlayer() : Player
+    {
+        return $this->player;
+    }
 }
