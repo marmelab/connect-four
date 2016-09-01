@@ -16,24 +16,3 @@
 
     {{ include('board/board.html.twig', { 'game': game }) }}
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        #controls-container {
-            margin: 0 10px 10px;
-        }
-
-        #controls-container form {
-            display: inline-block;
-            margin: 2px;
-            box-sizing: border-box;
-        }
-
-        #controls-container button {
-            height: 40px;
-            width: 40px;
-        }
-
-    </style>
-{% endblock %}
