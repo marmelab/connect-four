@@ -18,11 +18,11 @@ class Game
      */
     private $id;
 
-     /**
-      * @ORM\ManyToOne(targetEntity="Player")
-      * @ORM\JoinColumn(name="starting_player_id", referencedColumnName="id")
-      */
-     private $startingPlayer;
+    /**
+    * @ORM\ManyToOne(targetEntity="Player")
+    * @ORM\JoinColumn(name="starting_player_id", referencedColumnName="id")
+    */
+    private $startingPlayer;
 
     private $currentPlayer;
 
