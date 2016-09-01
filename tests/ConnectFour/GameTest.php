@@ -9,9 +9,9 @@ use ConnectFour\Player;
 
 class GameTest extends TestCase
 {
-    protected $game;
-    protected $player1;
-    protected $player2;
+    private $game;
+    private $player1;
+    private $player2;
 
     protected function setUp()
     {
@@ -119,6 +119,7 @@ class GameTest extends TestCase
         $nextPlayer->dropDisc($this->game, 1);
         $player->dropDisc($this->game, 7);
 
+        $this->assertEquals($this->game->getStatus(), Game::FINISHED);
         $this->assertTrue($this->game->isFinished());
     }
 
@@ -139,8 +140,9 @@ class GameTest extends TestCase
         $player->dropDisc($this->game, 6);
         $nextPlayer->dropDisc($this->game, 1);
         $player->dropDisc($this->game, 7);
-      // here the first turn wins, game should be over
-      $nextPlayer->dropDisc($this->game, 1);
+        // here the first turn wins, game should be over
+        $this->assertEquals($this->game->getStatus(), Game::FINISHED);
+        $nextPlayer->dropDisc($this->game, 1);
     }
 
     /**
@@ -160,5 +162,69 @@ class GameTest extends TestCase
                 $player->dropDisc($this->game, 4);
             }
         }
+    }
+
+    public function testBoardActuallyResets()
+    {
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 4);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 3);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 5);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 2);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 6);
+
+        $this->assertNotEquals($this->game->getBoard()->countDiscs(), 0);
+
+        $this->game->getBoard()->reset();
+
+        $this->assertEquals($this->game->getBoard()->countDiscs(), 0);
+    }
+
+    public function testReplayMovesGetsToSameBoard()
+    {
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 4);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 3);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 5);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 2);
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 6);
+
+        $firstBoard = clone $this->game->getBoard();
+
+        $this->game->getBoard()->reset();
+        $this->game->replayMoves();
+
+        $this->assertEquals($firstBoard, $this->game->getBoard());
+    }
+
+    public function testGameIsWaitingWhenNotTwoPlayers()
+    {
+        $game = new Game();
+
+        $player1 = new Player('Lonely');
+        $game->addPlayer($player1);
+
+        $this->assertEquals($game->getStatus(), Game::WAITING);
+    }
+
+    public function testGameIsPlayingAsSoonAsTheresTwoPlayers()
+    {
+        $this->assertEquals($this->game->getStatus(), Game::PLAYING);
+    }
+
+    public function testGameBoardIsEmptyOnInitialization()
+    {
+        $this->assertEquals($this->game->getBoard()->countDiscs(), 0);
+    }
+
+    public function testDiscCanBeRetrievedAfterBeingDropped()
+    {
+        $this->game->getCurrentPlayer()->dropDisc($this->game, 4);
+
+        $this->assertNotNull($this->game->getBoard()->getDisc(4, 0));
+    }
+
+    public function testThatColorsAreWellAssigned()
+    {
+        $this->assertEquals($this->game->getPlayerColor($this->player1), Game::FIRST_PLAYER_COLOR);
+        $this->assertEquals($this->game->getPlayerColor($this->player2), Game::SECOND_PLAYER_COLOR);
     }
 }

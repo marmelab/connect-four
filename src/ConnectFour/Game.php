@@ -10,9 +10,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Game
 {
-    const FINISHED = 0;
+    const WAITING = 0;
     const PLAYING = 1;
-    const WAITING = 2;
+    const FINISHED = 2;
 
     const FIRST_PLAYER_COLOR = 'yellow';
     const SECOND_PLAYER_COLOR = 'red';

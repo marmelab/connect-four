@@ -24,6 +24,11 @@ class Board
         }
     }
 
+    public function reset()
+    {
+        $this->initializeCells();
+    }
+
     public function getCells() : array
     {
         return $this->cells;
