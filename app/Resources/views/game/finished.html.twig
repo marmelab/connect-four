@@ -3,23 +3,25 @@
 {% block status %}
     Game over,
     {% if game.getWinner() %}
-        Winner is : <div class="badge {{ game.getWinner() == game.getRedPlayer() ? "red" : "yellow" }}"></div>
-        {{ game.getWinner().getNickname() }}
+        {% set winner = game.getWinner() %}
+        Winner is :
+        <div class="badge {{ game.getPlayerColor(winner) }}"></div>
+        {{ winner.getNickname() }}
     {% else %}
         Draw
     {% endif %}
 {% endblock %}
 
 {% block game %}
-
-    {{ include('board/board.html.twig', { 'game': game, 'columnBounds': columnBounds, 'disabled': true }) }}
+    {{ include('board/board.html.twig', { 'game': game, 'disabled': true }) }}
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .winner{
-            display:inline-block;
+        .winner {
+            display: inline-block;
         }
+
     </style>
 {% endblock %}

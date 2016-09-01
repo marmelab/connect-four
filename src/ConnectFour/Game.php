@@ -207,7 +207,7 @@ class Game
                     break;
                 }
                 ++$cnt;
-                $x += $colStep;
+                $x += $columnStep;
                 $y += $rowStep;
             } catch (OutOfBoardException $e) {
                 // if we're being out of the board, stop looking for discs

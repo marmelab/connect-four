@@ -1,51 +1,67 @@
 <style>
-    #board{
+    #board {
         background-color: blue;
-        padding:10px;
+        padding: 10px;
     }
 
-    #board.disabled{
+    #board.disabled {
         opacity: 0.2;
     }
 
-    .disc{
-        height:40px;
-        width:40px;
-        display:inline-block;
+    .column {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 40px;
+        margin: 2px;
+    }
+
+    .cell {
+        height: 40px;
+        width: 40px;
         border: 1px solid;
         box-sizing: border-box;
         border-radius: 20px;
-        background-color:white;
-        box-shadow: inset 4px 1px 6px 0px #656565;
+        background-color: white;
+        box-shadow: inset 4px 1px 6px 0 #656565;
+        margin: 5px 0;
     }
 
-    .disc.yellow{
+    .cell.empty {
+        border-color: grey;
+    }
+
+    .disc {
+        height: 40px;
+        width: 40px;
+        border: 1px solid;
+        box-sizing: border-box;
+    }
+
+    .disc.yellow {
         background-color: yellow;
     }
 
-    .disc.red{
+    .disc.red {
         background-color: red;
     }
 
-    .disc.empty{
-        border-color: grey;
-        box-shadow: none;
+    .clearfix {
+        clear: both;
     }
+
 </style>
 
 <div id="board" class="{{ disabled|default(false) ? 'disabled' : '' }}">
-    {% for row in rowBounds..0 %}
-        <div class="row">
-            {% for col in 0..columnBounds %}
-                {% set disc = game.getBoard().getDisc(col, row) %}
+    {% for column in game.getBoard().getCells() %}
+        <div class="column">
+            {% for disc in column | reverse %}
                 {% if disc %}
-                    {% set color = game.getYellowPlayer() == disc.getPlayer() ? "yellow" : "red" %}
-                    <div class="disc {{ color }}">
-                    </div>
+                    <div class="cell disc {{ game.getPlayerColor(disc.getPlayer()) }}"></div>
                 {% else %}
-                    <div class="disc empty"></div>
+                    <div class="cell empty"></div>
                 {% endif %}
             {% endfor %}
         </div>
     {% endfor %}
+    <div class="clearfix"></div>
 </div>

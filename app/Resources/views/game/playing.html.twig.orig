@@ -1,0 +1,149 @@
+{% extends 'game/base.html.twig' %}
+
+<<<<<<< aeaa898d023fba2bbb6ffcf59a9d3d1f0edf2f55
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <h1>Connect Four Game</h1>
+            <div>
+                <span>Playing</span>
+            </div>
+
+            <div>
+                {% set currentPlayer = game.getCurrentPlayer() %}
+                {% set firstPlayer = game.getFirstPlayer() %}
+                {% set secondPlayer = game.getSecondPlayer() %}
+                <div class="{{ currentPlayer == firstPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(firstPlayer) }}"></div>
+                    {{ firstPlayer.getNickname() }}
+                </div>
+                <div class="{{ currentPlayer == secondPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(secondPlayer) }}"></div>
+                    {{ secondPlayer.getNickname() }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="controls-container">
+    {% for col in 0..columnBounds %}
+        <form action="{{ path(" dropDisc", { " gameId": game.getId(), " col": col}) }}">
+            <button type="submit">V</button>
+        </form>
+    {% endfor %}
+</div>
+<div id="disc-container">
+    {% for column in game.getBoard().getCells() %}
+        <div class="column">
+            {% for disc in column | reverse %}
+                {% if disc %}
+                    <div class="cell disc {{ game.getPlayerColor(disc.getPlayer()) }}"></div>
+                {% else %}
+                    <div class="cell empty"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .badge {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+    }
+
+    .now-playing {
+        font-weight: bold;
+    }
+
+    .badge.yellow {
+        background-color: yellow;
+    }
+
+    .badge.red {
+        background-color: red;
+    }
+
+    .column {
+        float: left;
+    }
+
+    .cell {
+        height: 40px;
+        width: 40px;
+        border: 1px solid;
+        box-sizing: border-box;
+    }
+
+    .cell.empty {
+        border-color: grey;
+    }
+
+    .disc {
+        height: 40px;
+        width: 40px;
+        border: 1px solid;
+        box-sizing: border-box;
+    }
+
+    .disc.yellow {
+        background-color: yellow;
+    }
+
+    .disc.red {
+        background-color: red;
+    }
+
+    #controls-container {
+        margin: 10px 0;
+    }
+
+    #controls-container form {
+        display: inline-block;
+    }
+
+    #controls-container button {
+        height: 40px;
+        width: 40px;
+    }
+
+</style>
+=======
+{% block status %}
+    Now playing
+{% endblock %}
+
+{% block game %}
+    <div id="controls-container">
+        {% for col in 0..columnBounds %}
+            <form action="{{ path("dropDisc", { "gameId": game.getId(), "col": col}) }}">
+                <button type="submit">V</button>
+            </form>
+        {% endfor %}
+    </div>
+
+    {{ include('board/board.html.twig', { 'game': game, 'columnBounds': columnBounds }) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #controls-container{
+            margin: 0 10px 10px 10px;
+        }
+
+        #controls-container form{
+            display:inline-block;
+        }
+
+        #controls-container button{
+            height:40px;
+            width:40px;
+        }
+    </style>
+>>>>>>> Adds error & game end notification on templates
+{% endblock %}

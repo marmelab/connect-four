@@ -16,9 +16,9 @@ class Board
 
     private function initializeCells()
     {
-        for ($i = 0; $i <= self::COLUMNS; ++$i) {
+        for ($i = 0; $i < self::COLUMNS; ++$i) {
             $this->cells[$i] = array();
-            for ($j = 0; $j <= self::ROWS; ++$j) {
+            for ($j = 0; $j < self::ROWS; ++$j) {
                 $this->cells[$i][$j] = null;
             }
         }
@@ -67,16 +67,11 @@ class Board
         if ($column < 0 || $column >= self::COLUMNS) {
             throw new OutOfBoardException();
         }
-<<<<<<< 686c33f10bf685bf1e6768d01d82af2c13706801
-        $disc = new Disc($player);
-        $higherFreeRow = $this->getHigherFreeRow($column);
-        $this->discs[$column][$higherFreeRow] = $disc;
 
-=======
-        $higherFreeRow = $this->getHigherFreeRow($col);
+        $higherFreeRow = $this->getHigherFreeRow($column);
         $disc = new Disc($player);
-        $this->discs[$col][$higherFreeRow] = $disc;
->>>>>>> Fixes OutOfBoard exception throwing
+        $this->cells[$column][$higherFreeRow] = $disc;
+
         return $higherFreeRow;
     }
 

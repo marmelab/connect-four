@@ -37,51 +37,54 @@ class GameController extends Controller
         }
 
         return $this->render("game/$view.html.twig", array(
-          'game' => $game
+          'game' => $game,
       ));
     }
 
     /**
      * Views a game at its last step.
      *
-     * @Route("/game/{gameId}/drop/{col}", name="dropDisc")
+     * @Route("/game/{id}/drop/{column}", name="dropDisc")
      */
-    public function dropDiscAction($gameId, $col)
+    public function dropDiscAction(Game $game, int $column)
     {
-        $gameManager = $this->get('app.game.manager');
-        $game = $gameManager->getGame($gameId);
+        $game->replayMoves();
 
         $player = $game->getCurrentPlayer();
         // TODO : add session check for player nickname
 
-        try{
-            $player->dropDisc($game, $col);
-        }catch(GameFinishedException $gfe){
+        try {
+            $player->dropDisc($game, $column);
+        } catch (GameFinishedException $gfe) {
             $this->addFlash(
                 'notice',
                 'Game is finished, you cannot play anymore.'
             );
-        }catch(NotYourTurnException $nyte){
+        } catch (NotYourTurnException $nyte) {
             $this->addFlash(
                 'notice',
                 'It\'s your opponent\'s turn.'
             );
-        }catch(OutOfBoardException $oobe){
+        } catch (OutOfBoardException $oobe) {
             $this->addFlash(
                 'notice',
                 'Cannot play outside of game board.'
             );
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->addFlash(
                 'notice',
                 "Something happened : \n $e"
             );
         }
+        //TODO : call entity manager
+        // $gameManager->saveGame($game);
 
-        $gameManager->saveGame($game);
+        $this->getDoctrine()
+            ->getManager()
+            ->flush();
 
         return $this->redirectToRoute('viewGame', array(
-            'gameId' => $gameId
+            'id' => $game->getId(),
         ));
     }
 }
