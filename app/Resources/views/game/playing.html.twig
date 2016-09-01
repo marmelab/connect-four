@@ -9,11 +9,11 @@
       </div>
 
       <div>
-        <div style="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "font-weight:bold;" : "" }}">
+        <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "winner" : "" }}">
           <div class="badge red"></div>
           {{ game.getRedPlayer().getNickname() }}
         </div>
-        <div style="{{ game.getCurrentPlayer() == game.getYellowPlayer() ? "font-weight:bold;" : "" }}">
+        <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "winner" : "" }}">
             <div class="badge yellow"></div>
           {{ game.getYellowPlayer().getNickname() }}
         </div>
@@ -45,6 +45,10 @@
         display:inline-block;
         width:12px;
         height:12px;
+    }
+
+    .winner{
+        font-weight:bold;
     }
 
     .badge.yellow{
