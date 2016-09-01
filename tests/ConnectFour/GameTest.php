@@ -26,9 +26,7 @@ class GameTest extends TestCase
 
     public function testNumberOfDiscsOnBoard()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
 
@@ -44,9 +42,7 @@ class GameTest extends TestCase
      */
     public function testCannotDropDiscWhenNotPlayerTurn()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
@@ -56,9 +52,7 @@ class GameTest extends TestCase
 
     public function testTurnAlternatesOnDroppingDisc()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
 
@@ -73,9 +67,7 @@ class GameTest extends TestCase
      */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnRight()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
 
@@ -87,9 +79,7 @@ class GameTest extends TestCase
      */
     public function testAnExceptionIsThrownWhenDiscIsDroppedOutsideTheBoardOnLeft()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
 
@@ -98,9 +88,7 @@ class GameTest extends TestCase
 
     public function testPlayerWinsWhenDropingFourAlignedDiscs()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
@@ -118,9 +106,7 @@ class GameTest extends TestCase
 
     public function testGameIsFinishedWhenOnePlayerWins()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
@@ -141,9 +127,7 @@ class GameTest extends TestCase
      */
     public function testPlayerCannotDropDiscsAnymoreWhenGameIsFinished()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
@@ -164,9 +148,7 @@ class GameTest extends TestCase
      */
     public function testPlayerCannotDropDiscsAnymoreWhenColumnIsFull()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete();
 
         $player = $this->game->getCurrentPlayer();
         $nextPlayer = ($player == $this->player1) ? $this->player2 : $this->player1;
