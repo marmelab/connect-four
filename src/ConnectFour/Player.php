@@ -37,12 +37,12 @@ class Player
         $this->nickname = $nickname;
     }
 
-    public function dropDisc(Game $game, int $col, bool $addMove = true)
+    public function dropDisc(Game $game, int $column, bool $addMove = true)
     {
         if ($game->getCurrentPlayer() != $this) {
             throw new NotYourTurnException();
         }
 
-        $game->addDisc($col, $this, $addMove);
+        $game->addDisc($column, $this, $addMove);
     }
 }

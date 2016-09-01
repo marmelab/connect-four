@@ -29,9 +29,9 @@ class Board
         return $this->discs;
     }
 
-    public function getDisc(int $col, int $row) // : Disc - cannot return null, waiting for php 7.1
+    public function getDisc(int $column, int $row) // : Disc - cannot return null, waiting for php 7.1
     {
-        return $this->discs[$col][$row];
+        return $this->discs[$column][$row];
     }
 
     public function countDiscs() : int
@@ -45,18 +45,18 @@ class Board
         return $count;
     }
 
-    public function addDisc($col, $player)
+    public function addDisc($column, $player)
     {
         $disc = new Disc($player);
-        $this->discs[$col][$this->getHigherFreeRow($col)] = $disc;
+        $this->discs[$column][$this->getHigherFreeRow($column)] = $disc;
     }
 
-    private function getHigherFreeRow($col) : int
+    private function getHigherFreeRow($column) : int
     {
         $row = 0;
 
         while ($row < self::ROWS) {
-            if (!$this->discs[$col][$row]) {
+            if (!$this->discs[$column][$row]) {
                 return $row;
             }
             ++$row;

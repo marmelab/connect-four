@@ -114,7 +114,7 @@ class Game
         return $this->board;
     }
 
-    public function addDisc(int $col, Player $player, bool $addMove = true)
+    public function addDisc(int $column, Player $player, bool $addMove = true)
     {
         if ($this->currentPlayer != $player) {
             throw new NotYourTurnException();
@@ -122,12 +122,12 @@ class Game
         if ($addMove) {
             $move = new Move();
             $move->setGame($this);
-            $move->setColumn($col);
+            $move->setColumn($column);
             $move->setDate(new \DateTime());
             $move->setPlayer($player);
             $this->getMoves()->add($move);
         }
-        $this->getBoard()->addDisc($col, $player);
+        $this->getBoard()->addDisc($column, $player);
 
         $this->currentPlayer = ($this->yellowPlayer == $player) ? $this->redPlayer : $this->yellowPlayer;
     }

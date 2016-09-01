@@ -24,8 +24,8 @@
     <div id="disc-container">
         {% for row in rowBound..0 %}
             <div class="row">
-            {% for col in 0..columnBound %}
-                {% set disc = game.getBoard().getDisc(col, row) %}
+            {% for column in 0..columnBound %}
+                {% set disc = game.getBoard().getDisc(column, row) %}
                 {% if disc %}
                     {% set color = game.getYellowPlayer() == disc.getPlayer() ? "yellow" : "red" %}
                     <div class="disc {{ color }}">
