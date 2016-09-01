@@ -10,6 +10,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Game
 {
+    const FINISHED = 0;
+    const PLAYING = 1;
+    const WAITING = 2;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -89,11 +93,11 @@ class Game
     public function getStatus() : string
     {
         if ($this->isFinished()) {
-            return 'finished';
+            return self::FINISHED;
         } elseif ((bool) $this->yellowPlayer && (bool) $this->redPlayer) {
-            return 'playing';
+            return self::PLAYING;
         } else {
-            return 'waiting';
+            return self::WAITING;
         }
     }
 
