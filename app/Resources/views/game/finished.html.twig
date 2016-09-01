@@ -1,4 +1,4 @@
-{% extends 'game/base.html.twig' %}
+{% extends 'game/board.html.twig' %}
 
 {% block status %}
     Game over,
@@ -13,5 +13,6 @@
 {% endblock %}
 
 {% block game %}
-    {{ include('board/board.html.twig', { 'game': game, 'disabled': true }) }}
+    {% set disabled = true %}
+    {{ parent() }}
 {% endblock %}

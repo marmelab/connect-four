@@ -1,4 +1,4 @@
-{% extends 'game/base.html.twig' %}
+{% extends 'game/board.html.twig' %}
 
 {% block status %}
     Now playing
@@ -14,5 +14,5 @@
         <div class="clearfix"></div>
     </div>
 
-    {{ include('board/board.html.twig', { 'game': game }) }}
+    {{ parent() }}
 {% endblock %}
