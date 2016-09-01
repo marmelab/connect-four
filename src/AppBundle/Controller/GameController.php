@@ -9,14 +9,10 @@ use ConnectFour\Game;
 class GameController extends Controller
 {
     /**
-     * @Route("/game/{gameId}", name="viewGame")
+     * @Route("/game/{id}", name="viewGame")
      */
-    public function viewAction($gameId)
+    public function viewAction(Game $game)
     {
-        $game = $this->getDoctrine()
-            ->getRepository("ConnectFour\Game")
-            ->findOneById($gameId);
-
         $game->replayMoves();
 
         // TODO : add session check for player nickname
