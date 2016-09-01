@@ -73,7 +73,7 @@ class GameController extends Controller
         } catch (\Exception $e) {
             $this->addFlash(
                 'notice',
-                "Something happened : \n $e"
+                sprintf('Something happened : %s', $e->getMessage())
             );
         }
 

@@ -45,6 +45,6 @@ class Player
 
     public function __toString()
     {
-        return "Player($this->nickname)";
+        return sprintf('Player(%s)', $this->nickname);
     }
 }
