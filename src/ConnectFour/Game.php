@@ -48,7 +48,7 @@ class Game
 
     private $winner;
 
-    private $finished = false;
+    private $finished;
 
     /**
      * @ORM\OneToMany(targetEntity="Move", mappedBy="game", cascade={"all"})
