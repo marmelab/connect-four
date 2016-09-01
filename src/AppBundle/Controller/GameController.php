@@ -19,9 +19,8 @@ class GameController extends Controller
         $game = $gameManager->getGame($gameId);
 
         // TODO : add session check for player nickname
-        $status = $game->getStatus();
 
-        return $this->render("game/$status.html.twig", array(
+        return $this->render('game/'.$game->getStatus().'.html.twig', array(
           'game' => $game,
           'columnBound' => Board::COLUMNS,
           'rowBound' => Board::ROWS,
