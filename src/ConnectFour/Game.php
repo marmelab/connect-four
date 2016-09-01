@@ -14,6 +14,9 @@ class Game
     const PLAYING = 1;
     const WAITING = 2;
 
+    const FIRST_PLAYER_COLOR = 'yellow';
+    const SECOND_PLAYER_COLOR = 'red';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,24 +25,24 @@ class Game
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Player")
-    * @ORM\JoinColumn(name="starting_player_id", referencedColumnName="id")
-    */
+     * @ORM\ManyToOne(targetEntity="Player")
+     * @ORM\JoinColumn(name="starting_player_id", referencedColumnName="id")
+     */
     private $startingPlayer;
 
     private $currentPlayer;
 
     /**
      * @ORM\ManyToOne(targetEntity="Player")
-     * @ORM\JoinColumn(name="yellow_player_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="first_player_id", referencedColumnName="id")
      */
-    private $yellowPlayer;
+    private $firstPlayer;
 
     /**
      * @ORM\ManyToOne(targetEntity="Player")
-     * @ORM\JoinColumn(name="red_player_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="second_player_id", referencedColumnName="id")
      */
-    private $redPlayer;
+    private $secondPlayer;
 
     private $board;
 
@@ -58,12 +61,12 @@ class Game
 
     public function addPlayer(Player $player)
     {
-        if (!$this->yellowPlayer) {
-            $this->yellowPlayer = $player;
-        } elseif (!$this->redPlayer) {
-            $this->redPlayer = $player;
-        // here both players are assigned, we can decide who starts
-        $this->startingPlayer = rand(0, 1) == 0 ? $this->yellowPlayer : $this->redPlayer;
+        if (!$this->firstPlayer) {
+            $this->firstPlayer = $player;
+        } elseif (!$this->secondPlayer) {
+            $this->secondPlayer = $player;
+            // here both players are assigned, we can decide who starts
+            $this->startingPlayer = rand(0, 1) == 0 ? $this->firstPlayer : $this->secondPlayer;
             $this->currentPlayer = $this->startingPlayer;
         } else {
             throw new TooManyPlayersException();
@@ -80,21 +83,21 @@ class Game
         return $this->currentPlayer;
     }
 
-    public function getRedPlayer() : Player
+    public function getSecondPlayer() : Player
     {
-        return $this->redPlayer;
+        return $this->secondPlayer;
     }
 
-    public function getYellowPlayer() : Player
+    public function getFirstPlayer() : Player
     {
-        return $this->yellowPlayer;
+        return $this->firstPlayer;
     }
 
     public function getStatus() : string
     {
         if ($this->isFinished()) {
             return self::FINISHED;
-        } elseif ((bool) $this->yellowPlayer && (bool) $this->redPlayer) {
+        } elseif ((bool) $this->firstPlayer && (bool) $this->secondPlayer) {
             return self::PLAYING;
         } else {
             return self::WAITING;
@@ -133,7 +136,7 @@ class Game
 
     private function switchPlayer()
     {
-        $this->currentPlayer = ($this->yellowPlayer == $player) ? $this->redPlayer : $this->yellowPlayer;
+        $this->currentPlayer = ($this->firstPlayer == $this->currentPlayer) ? $this->secondPlayer : $this->firstPlayer;
     }
 
     public function replayMoves()
