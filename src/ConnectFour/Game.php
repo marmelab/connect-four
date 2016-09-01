@@ -128,6 +128,11 @@ class Game
         }
         $this->getBoard()->addDisc($column, $player);
 
+        $this->switchPlayer();
+    }
+
+    private function switchPlayer()
+    {
         $this->currentPlayer = ($this->yellowPlayer == $player) ? $this->redPlayer : $this->yellowPlayer;
     }
 
