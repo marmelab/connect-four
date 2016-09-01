@@ -99,9 +99,9 @@ class Game
             return self::FINISHED;
         } elseif ((bool) $this->firstPlayer && (bool) $this->secondPlayer) {
             return self::PLAYING;
-        } else {
-            return self::WAITING;
         }
+
+        return self::WAITING;
     }
 
     public function isFinished() : bool
