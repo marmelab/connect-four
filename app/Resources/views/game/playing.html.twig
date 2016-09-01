@@ -1,82 +1,84 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <div id="wrapper">
-    <div id="container">
-      <h1>Connect Four Game</h1>
-      <div>
-        <span>Playing</span>
-      </div>
+    <div id="wrapper">
+        <div id="container">
+            <h1>Connect Four Game</h1>
+            <div>
+                <span>Playing</span>
+            </div>
 
-      <div>
-        <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "winner" : "" }}">
-          <div class="badge red"></div>
-          {{ game.getRedPlayer().getNickname() }}
-        </div>
-        <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? "winner" : "" }}">
-            <div class="badge yellow"></div>
-          {{ game.getYellowPlayer().getNickname() }}
-        </div>
-      </div>
+            <div>
+                <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? " winner" : " " }}">
+                    <div class="badge red"></div>
+                    {{ game.getRedPlayer().getNickname() }}
+                </div>
+                <div class="{{ game.getCurrentPlayer() == game.getRedPlayer() ? " winner" : " " }}">
+                    <div class="badge yellow"></div>
+                    {{ game.getYellowPlayer().getNickname() }}
+                </div>
+            </div>
 
+        </div>
     </div>
-  </div>
     <div id="disc-container">
         {% for row in rowBound..0 %}
             <div class="row">
-            {% for column in 0..columnBound %}
-                {% set disc = game.getBoard().getDisc(column, row) %}
-                {% if disc %}
-                    {% set color = game.getYellowPlayer() == disc.getPlayer() ? "yellow" : "red" %}
-                    <div class="disc {{ color }}">
-                    </div>
-                {% else %}
-                    <div class="disc empty"></div>
-                {% endif %}
-            {% endfor %}
+                {% for column in 0..columnBound %}
+                    {% set disc = game.getBoard().getDisc(column, row) %}
+                    {% if disc %}
+                        {% set color = game.getYellowPlayer() == disc.getPlayer()
+                            ? "yellow"
+                            : "red" %}
+                        <div class="disc {{ color }}"></div>
+                    {% else %}
+                        <div class="disc empty"></div>
+                    {% endif %}
+                {% endfor %}
             </div>
         {% endfor %}
     </div>
 {% endblock %}
 
 {% block stylesheets %}
-<style>
-    .badge{
-        display:inline-block;
-        width:12px;
-        height:12px;
-    }
+    <style>
+        .badge {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+        }
 
-    .winner{
-        font-weight:bold;
-    }
+        .winner {
+            font-weight: bold;
+        }
 
-    .badge.yellow{
-        background-color:yellow;
-    }
+        .badge.yellow {
+            background-color: yellow;
+        }
 
-    .badge.red{
-        background-color:red;
-    }
+        .badge.red {
+            background-color: red;
+        }
 
-    .disc{
-        height:40px;
-        width:40px;
-        display:inline-block;
-        border: 1px solid;
-        box-sizing: border-box;
-    }
+        .disc {
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
 
-    .disc.yellow{
-        background-color: yellow;
-    }
+        .disc.yellow {
+            background-color: yellow;
+        }
 
-    .disc.red{
-        background-color: red;
-    }
+        .disc.red {
+            background-color: red;
+        }
 
-    .disc.empty{
-        border-color: grey;
-    }
-</style>
+        .disc.empty {
+            border-color: grey;
+        }
+
+    </style>
 {% endblock %}
