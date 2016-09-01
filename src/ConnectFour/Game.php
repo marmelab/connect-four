@@ -119,8 +119,7 @@ class Game
         if ($this->currentPlayer != $player) {
             throw new NotYourTurnException();
         }
-        if($addMove)
-        {
+        if ($addMove) {
             $move = new Move();
             $move->setGame($this);
             $move->setColumn($col);

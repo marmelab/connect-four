@@ -64,5 +64,4 @@ class Board
 
         throw new OutOfBoardException();
     }
-
 }

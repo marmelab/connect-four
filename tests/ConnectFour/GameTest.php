@@ -17,10 +17,10 @@ class GameTest extends TestCase
     {
         $this->game = new Game();
 
-        $this->player1 = new Player("First");
+        $this->player1 = new Player('First');
         $this->game->addPlayer($this->player1);
 
-        $this->player2 = new Player("Second");
+        $this->player2 = new Player('Second');
         $this->game->addPlayer($this->player2);
     }
 
@@ -59,7 +59,7 @@ class GameTest extends TestCase
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-        
+
         $player = $this->game->getCurrentPlayer();
 
         $player->dropDisc($this->game, 4);
@@ -99,7 +99,7 @@ class GameTest extends TestCase
     public function testPlayerWinsWhenDropingFourAlignedDiscs()
     {
         $this->markTestIncomplete(
-            "This test has not been implemented yet."
+            'This test has not been implemented yet.'
         );
 
         $player = $this->game->getCurrentPlayer();
