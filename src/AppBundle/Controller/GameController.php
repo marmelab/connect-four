@@ -76,8 +76,6 @@ class GameController extends Controller
                 "Something happened : \n $e"
             );
         }
-        //TODO : call entity manager
-        // $gameManager->saveGame($game);
 
         $this->getDoctrine()
             ->getManager()

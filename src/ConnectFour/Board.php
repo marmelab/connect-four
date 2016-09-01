@@ -90,7 +90,6 @@ class Board
             }
             ++$row;
         }
-
         throw new OutOfBoardException();
     }
 }

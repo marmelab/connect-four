@@ -129,11 +129,13 @@ class Game
         if ($this->currentPlayer != $player) {
             throw new NotYourTurnException();
         }
+
+        $rowAdded = $this->getBoard()->addDisc($column, $player);
+
         if ($addMove) {
             $move = new Move($this, $column, $player, new \DateTime());
             $this->getMoves()->add($move);
         }
-        $rowAdded = $this->getBoard()->addDisc($column, $player);
 
         if ($this->isDiscWinner($column, $rowAdded)) {
             $this->winner = $player;
