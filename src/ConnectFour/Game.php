@@ -148,6 +148,13 @@ class Game
         }
     }
 
+    public function getPlayerColor(Player $player) : string
+    {
+        return $this->getFirstPlayer() == $player
+            ? self::FIRST_PLAYER_COLOR
+            : self::SECOND_PLAYER_COLOR;
+    }
+
     public function setMoves($moves)
     {
         $this->moves = $moves;

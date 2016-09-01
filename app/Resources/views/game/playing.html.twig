@@ -9,13 +9,16 @@
             </div>
 
             <div>
-                <div class="{{ game.getCurrentPlayer() == game.getFirstPlayer() ? 'now-playing' : '' }}">
-                    <div class="badge {{ constant('ConnectFour\\Game::FIRST_PLAYER_COLOR') }}"></div>
-                    {{ game.getFirstPlayer().getNickname() }}
+                {% set currentPlayer = game.getCurrentPlayer() %}
+                {% set firstPlayer = game.getFirstPlayer() %}
+                {% set secondPlayer = game.getSecondPlayer() %}
+                <div class="{{ currentPlayer == firstPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(firstPlayer) }}"></div>
+                    {{ firstPlayer.getNickname() }}
                 </div>
-                <div class="{{ game.getCurrentPlayer() == game.getSecondPlayer() ? 'now-playing' : '' }}">
-                    <div class="badge {{ constant('ConnectFour\\Game::SECOND_PLAYER_COLOR') }}"></div>
-                    {{ game.getSecondPlayer().getNickname() }}
+                <div class="{{ currentPlayer == secondPlayer ? 'now-playing' : '' }}">
+                    <div class="badge {{ game.getPlayerColor(secondPlayer) }}"></div>
+                    {{ secondPlayer.getNickname() }}
                 </div>
             </div>
 
@@ -26,10 +29,7 @@
             <div class="column">
                 {% for disc in column | reverse %}
                     {% if disc %}
-                        {% set color = game.getFirstPlayer() == disc.getPlayer()
-                            ? constant('ConnectFour\\Game::FIRST_PLAYER_COLOR')
-                            : constant('ConnectFour\\Game::SECOND_PLAYER_COLOR') %}
-                        <div class="cell disc {{ color }}"></div>
+                        <div class="cell disc {{ game.getPlayerColor(disc.getPlayer()) }}"></div>
                     {% else %}
                         <div class="cell empty"></div>
                     {% endif %}
