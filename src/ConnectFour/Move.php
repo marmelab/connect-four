@@ -38,6 +38,15 @@ class Move
      */
     private $player;
 
+
+    public function __construct(Game $game, int $column, Player $player, \DateTime $date)
+    {
+        $this->game = $game;
+        $this->column = $column;
+        $this->player = $player;
+        $this->date = $date;
+    }
+
     /**
      * Get id.
      *

@@ -123,11 +123,7 @@ class Game
             throw new NotYourTurnException();
         }
         if ($addMove) {
-            $move = new Move();
-            $move->setGame($this);
-            $move->setColumn($column);
-            $move->setDate(new \DateTime());
-            $move->setPlayer($player);
+            $move = new Move($this, $column, $player, new \DateTime());
             $this->getMoves()->add($move);
         }
         $this->getBoard()->addDisc($column, $player);
