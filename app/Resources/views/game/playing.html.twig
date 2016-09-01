@@ -22,9 +22,9 @@
     </div>
   </div>
     <div id="disc-container">
-        {% for row in rowBounds..0 %}
+        {% for row in rowBound..0 %}
             <div class="row">
-            {% for col in 0..columnBounds %}
+            {% for col in 0..columnBound %}
                 {% set disc = game.getBoard().getDisc(col, row) %}
                 {% if disc %}
                     {% set color = game.getYellowPlayer() == disc.getPlayer() ? "yellow" : "red" %}

@@ -23,8 +23,8 @@ class GameController extends Controller
 
         return $this->render("game/$status.html.twig", array(
           'game' => $game,
-          'columnBounds' => Board::COLUMNS,
-          'rowBounds' => Board::ROWS,
+          'columnBound' => Board::COLUMNS,
+          'rowBound' => Board::ROWS,
       ));
     }
 }
