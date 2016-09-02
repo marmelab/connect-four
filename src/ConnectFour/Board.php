@@ -82,7 +82,7 @@ class Board
 
     public function isFull() : bool
     {
-        return $this->countDiscs() == self::COLUMNS * self::ROWS;
+        return $this->countDiscs() === self::COLUMNS * self::ROWS;
     }
 
     private function getHigherFreeRow($column) : int
