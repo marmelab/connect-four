@@ -36,7 +36,7 @@ class Board
 
     public function getDisc(int $column, int $row, Player $player = null) // : Disc - cannot return null, waiting for php 7.1
     {
-        if (!in_array($column, range(0, self::COLUMNS - 1)) || !in_array($row, range(0, self::ROWS - 1))) {
+        if (!$this->isInBounds($column, self::COLUMNS) || !$this->isInBounds($row, self::ROWS)) {
             throw new OutOfBoardException();
         }
         $disc = $this->cells[$column][$row];
@@ -62,9 +62,14 @@ class Board
         return $count;
     }
 
+    private function isInBounds($index, $maxBound) : bool
+    {
+        return $index >= 0 && $index < $maxBound;
+    }
+
     public function addDisc($column, $player) : int
     {
-        if ($column < 0 || $column >= self::COLUMNS) {
+        if ($this->isInBounds($column, self::COLUMNS)) {
             throw new OutOfBoardException();
         }
 
