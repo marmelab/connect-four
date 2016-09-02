@@ -36,10 +36,7 @@ class Board
 
     public function getDisc(int $column, int $row, Player $player = null) // : Disc - cannot return null, waiting for php 7.1
     {
-        if (
-            $column < 0 || $column >= self::COLUMNS ||
-            $row < 0 || $row >= self::ROWS
-        ) {
+        if (!in_array(column, range(0, self::COLUMNS)) || !in_array(row, range(0, self::ROWS))) {
             throw new OutOfBoardException();
         }
         $disc = $this->cells[$column][$row];
