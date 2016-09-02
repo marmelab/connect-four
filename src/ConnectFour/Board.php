@@ -69,7 +69,7 @@ class Board
 
     public function addDisc($column, $player) : int
     {
-        if ($this->isInBounds($column, self::COLUMNS)) {
+        if (!$this->isInBounds($column, self::COLUMNS)) {
             throw new OutOfBoardException();
         }
 
