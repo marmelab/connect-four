@@ -203,9 +203,9 @@ class Game
             $this->isVerticallyInBounds($y, $row, $rowStep, $maxPositions)
         ) {
             try {
-                $disc = $this->getBoard()->getDisc($x, $y, $player);
-                if (!$disc) {
-                    // if no disk found, stop looking
+                try {
+                    $disc = $this->getBoard()->getDisc($x, $y, $player);
+                } catch (DiscNotFoundException $dnfe) {
                     break;
                 }
                 ++$cnt;

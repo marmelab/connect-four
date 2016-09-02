@@ -36,13 +36,16 @@ class Board
 
     public function getDisc(int $column, int $row, Player $player = null) // : Disc - cannot return null, waiting for php 7.1
     {
-        if (!in_array(column, range(0, self::COLUMNS)) || !in_array(row, range(0, self::ROWS))) {
+        if (!in_array($column, range(0, self::COLUMNS - 1)) || !in_array($row, range(0, self::ROWS - 1))) {
             throw new OutOfBoardException();
         }
         $disc = $this->cells[$column][$row];
 
-        if ((bool) $player && $disc && $disc->getPlayer() != $player) {
-            return;
+        if (
+            ($player && $disc && $disc->getPlayer() != $player) ||
+            !$disc
+        ) {
+            throw new DiscNotFoundException();
         }
 
         return $disc;
