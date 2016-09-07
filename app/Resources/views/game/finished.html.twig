@@ -1,9 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'game/board.html.twig' %}
 
-{% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <h1>Connect Four Game</h1>
-        </div>
-    </div>
+{% block status %}
+    Game over,
+    {% if game.getWinner() %}
+        {% set winner = game.getWinner() %}
+        Winner is :
+        <div class="badge {{ game.getPlayerColor(winner) }}"></div>
+        {{ winner.getNickname() }}
+    {% else %}
+        Draw
+    {% endif %}
+{% endblock %}
+
+{% block game %}
+    {% set disabled = true %}
+    {{ parent() }}
 {% endblock %}

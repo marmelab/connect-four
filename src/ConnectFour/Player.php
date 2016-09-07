@@ -38,10 +38,13 @@ class Player
 
     public function dropDisc(Game $game, int $column, bool $addMove = true)
     {
-        if ($game->getCurrentPlayer() != $this) {
-            throw new NotYourTurnException();
-        }
+        $currentPlayer = $game->getCurrentPlayer();
 
         $game->addDisc($column, $this, $addMove);
+    }
+
+    public function __toString()
+    {
+        return sprintf('Player(%s)', $this->nickname);
     }
 }
